@@ -16,6 +16,10 @@ import type {
 } from "@tanstack/ai";
 import { panic, Result } from "better-result";
 
+import {
+  resolveStellaSandboxRun,
+  type StellaSandboxRunInput,
+} from "@stll/agent-engine";
 import type { ModelRole } from "@stll/ai-catalog";
 import {
   CHAT_SEND_MODE,
@@ -38,6 +42,7 @@ import type {
   ChatSafePrompt,
   ChatUntrustedPromptSuffix,
 } from "@/api/handlers/chat/chat-prompt";
+import { resolveChatSandboxPlan } from "@/api/handlers/chat/chat-sandbox-plan";
 import { compactModelMessagesForModel } from "@/api/handlers/chat/compaction";
 import {
   createLoopRecoverySystemPrompt,
@@ -598,6 +603,7 @@ const runChatAttempts = async function* ({
     promptCachingEnabled,
     role: "chat",
     safeDb,
+    sandboxRun: resolveChatSandboxPlan(),
     state: primaryState,
     thirdPartyBoundary,
     threadId,
@@ -665,6 +671,14 @@ type RunChatAttemptProps = {
   promptCachingEnabled: boolean;
   role: ChatAttemptRole;
   safeDb: SafeDb;
+  /**
+   * When set, this attempt runs inside an agent sandbox (plan 050): the
+   * harness adapter replaces the model adapter and the sandbox middleware is
+   * added. When absent (the default for every normal chat), the attempt is
+   * unchanged. Only the primary attempt may carry a plan; the fallback stays a
+   * plain server-side model attempt.
+   */
+  sandboxRun?: StellaSandboxRunInput | undefined;
   state: ChatAttemptState;
   thirdPartyBoundary: ChatThirdPartyBoundary;
   threadId: SafeId<"chatThread">;
@@ -689,6 +703,7 @@ const runChatAttempt = async function* ({
   promptCachingEnabled,
   role,
   safeDb,
+  sandboxRun,
   state,
   thirdPartyBoundary,
   threadId,
@@ -720,6 +735,42 @@ const runChatAttempt = async function* ({
     userId,
     workspaceId,
   });
+
+  if (sandboxRun) {
+    // Agent-sandbox attempt (plan 050): the harness adapter drives the run and
+    // reaches stella tools only through the bridged MCP server in the sandbox
+    // workspace, so `tools`/`mcp` are intentionally not passed here — the
+    // bridge is the sole tool surface. The analytics + runtime middleware are
+    // shared with the normal path; the sandbox middleware provides the
+    // capability the harness adapter requires.
+    const { adapter, middleware: sandboxMiddleware } =
+      resolveStellaSandboxRun(sandboxRun);
+    yield* chat({
+      adapter,
+      messages: preparedMessages,
+      agentLoopStrategy: maxIterations(MAX_TOOL_STEPS),
+      abortController,
+      threadId,
+      middleware: [
+        analytics.middleware,
+        createChatRuntimeMiddleware({
+          abortSignal,
+          baseSystem,
+          compactionAnalytics,
+          compactionFeature,
+          model,
+          modelId,
+          organizationId,
+          orgAIConfig,
+          role,
+          state,
+          threadId,
+        }),
+        sandboxMiddleware,
+      ],
+    });
+    return;
+  }
 
   const stream = chat({
     adapter: model.adapter,

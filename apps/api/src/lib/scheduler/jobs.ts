@@ -9,6 +9,8 @@ import { BACKFILL_SK_DOCUMENTS_TASK } from "@/api/lib/scheduler/tasks/case-law-s
 import { EXPIRE_DESKTOP_EDIT_SESSIONS_TASK } from "@/api/lib/scheduler/tasks/desktop-edit-session-expiry";
 import { INFO_SOUD_SYNC_TRACKED_CASES_TASK } from "@/api/lib/scheduler/tasks/infosoud";
 import { REPAIR_CHAT_SEARCH_INDEX_TASK } from "@/api/lib/scheduler/tasks/search-chat-index";
+import { MEMORY_CURATOR_TASK } from "@/api/lib/scheduler/tasks/memory-curator";
+import { MEMORY_EXTRACTOR_TASK } from "@/api/lib/scheduler/tasks/memory-extractor";
 import { REPAIR_SEARCH_SEMANTIC_TIMESTAMPS_TASK } from "@/api/lib/scheduler/tasks/search-semantic-timestamps";
 
 type SchedulerJobDefinition = {
@@ -177,5 +179,29 @@ export const ensureDefaultSchedulerJobs = async (): Promise<void> => {
       everyMs: 15 * 60 * 1000,
     },
     task: BACKFILL_SK_DOCUMENTS_TASK,
+  });
+
+  await ensureSchedulerJob({
+    description:
+      "Age AI memories through the active -> stale -> archived lifecycle",
+    id: "memory.curator.nightly",
+    schedule: {
+      type: "daily",
+      hour: 2,
+      minute: 0,
+      timeZone: "Europe/Prague",
+    },
+    task: MEMORY_CURATOR_TASK,
+  });
+
+  await ensureSchedulerJob({
+    description:
+      "Extract suggested AI memories from new chat-thread compactions",
+    id: "memory.extractor.hourly",
+    schedule: {
+      type: "interval",
+      everyMs: 60 * 60 * 1000,
+    },
+    task: MEMORY_EXTRACTOR_TASK,
   });
 };

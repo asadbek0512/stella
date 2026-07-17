@@ -136,6 +136,7 @@ import { HandlerError } from "@/api/lib/errors/tagged-errors";
 import { createFileKey } from "@/api/lib/files/utils";
 import { FILE_SIZE_LIMIT_BYTES, FILE_SIZE_LIMITS } from "@/api/lib/limits";
 import { getDisabledNativeToolSlugs } from "@/api/lib/mcp-connectors/catalog-metadata";
+import { resolveMemorySourceWorkspaceIds } from "@/api/lib/memory/memory-provenance";
 import { getS3 } from "@/api/lib/s3";
 import { brandPersistedChatMessageId } from "@/api/lib/safe-id-boundaries";
 import { upsertChatThreadSearchDocument } from "@/api/lib/search/index-chat";
@@ -470,6 +471,7 @@ const sendMessage = createSafeRootHandler(
         safeDb,
         scopedDb,
         threadId: body.threadId,
+        workspaceId,
         userId: user.id,
         // Schema validation only; this tool set's `spawn_subagents` never
         // executes, so a raw (non-anonymizing) boundary is correct here —
@@ -494,6 +496,14 @@ const sendMessage = createSafeRootHandler(
         disabledNativeToolSlugs,
         activeSkillContext: validationActiveSkillContext,
         recordAuditEvent,
+        resolveMemorySourceWorkspaceIds: () =>
+          resolveMemorySourceWorkspaceIds({
+            accessibleWorkspaceIds: new Set(accessibleWorkspaceIds),
+            contextMatterIds: [],
+            dataWorkspaceIds: [],
+            registeredWorkspaceIds: refRegistry.getRegisteredWorkspaceIds(),
+            workspaceId,
+          }),
         workspaceStatusById,
       });
 
@@ -998,6 +1008,7 @@ const sendMessage = createSafeRootHandler(
         safeDb,
         scopedDb,
         threadId: body.threadId,
+        workspaceId,
         thirdPartyBoundary,
         excludedChatHistoryMessageIds: deleteMessageIdsBeforeLatest,
         userId: user.id,
@@ -1037,6 +1048,14 @@ const sendMessage = createSafeRootHandler(
           },
           ...(workspaceId === null ? {} : { workspaceId }),
         }),
+        resolveMemorySourceWorkspaceIds: () =>
+          resolveMemorySourceWorkspaceIds({
+            accessibleWorkspaceIds: accessibleSet,
+            contextMatterIds: effectiveContextMatterIds,
+            dataWorkspaceIds: dataScopeAfterIncomingMessage,
+            registeredWorkspaceIds: refRegistry.getRegisteredWorkspaceIds(),
+            workspaceId,
+          }),
         workspaceStatusById,
       });
       // A named scope narrows the streaming turn to its server-defined

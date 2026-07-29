@@ -337,7 +337,7 @@
     "files": {}
   },
   "cross-handler-imports": {
-    "count": 121,
+    "count": 127,
     "files": {
       "apps/api/src/handlers/catalogue/bundled-skill-resources.ts": 1,
       "apps/api/src/handlers/catalogue/install-skill.ts": 1,
@@ -390,6 +390,7 @@
       "apps/api/src/handlers/templates/fill.ts": 1,
       "apps/api/src/handlers/uploads/agent-skill.ts": 2,
       "apps/api/src/handlers/uploads/create.ts": 1,
+      "apps/api/src/handlers/uploads/email-ingest.ts": 6,
       "apps/api/src/handlers/uploads/entity-create-tree.ts": 1,
       "apps/api/src/handlers/uploads/entity-create.ts": 5,
       "apps/api/src/handlers/uploads/entity-version.ts": 6,

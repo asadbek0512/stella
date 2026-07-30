@@ -393,9 +393,7 @@ export const chatThreadCompactions = p.pgTable(
     memoryExtractedAt: timestamptz("memory_extracted_at"),
     // Failed attempts stay eligible, but rotate behind untouched work so a
     // permanently bad compaction cannot monopolize the global batch.
-    memoryExtractionAttemptedAt: timestamptz(
-      "memory_extraction_attempted_at",
-    ),
+    memoryExtractionAttemptedAt: timestamptz("memory_extraction_attempted_at"),
     createdAt: timestamptz("created_at").notNull().defaultNow(),
   },
   (table) => [
@@ -408,7 +406,11 @@ export const chatThreadCompactions = p.pgTable(
       .on(table.threadId, table.status, table.createdAt),
     p
       .index("chat_thread_compactions_memory_unmined_idx")
-      .on(table.memoryExtractionAttemptedAt, table.createdAt)
+      .on(
+        sql`${table.memoryExtractionAttemptedAt} ASC NULLS FIRST`,
+        table.createdAt,
+        table.id,
+      )
       .where(
         sql`${table.memoryExtractedAt} IS NULL AND ${table.status} = 'active'`,
       ),
@@ -478,15 +480,14 @@ export const aiMemories = p.pgTable(
       (): AnyPgColumn => aiMemories.id,
       { onDelete: "set null" },
     ),
-    createdAt: p.timestamp("created_at").notNull().defaultNow(),
-    updatedAt: p
-      .timestamp("updated_at")
+    createdAt: timestamptz("created_at").notNull().defaultNow(),
+    updatedAt: timestamptz("updated_at")
       .notNull()
       .defaultNow()
       .$onUpdate(() => new Date()),
     // Drives the curator lifecycle (active -> stale -> archived).
-    lastUsedAt: p.timestamp("last_used_at").notNull().defaultNow(),
-    archivedAt: p.timestamp("archived_at"),
+    lastUsedAt: timestamptz("last_used_at").notNull().defaultNow(),
+    archivedAt: timestamptz("archived_at"),
   },
   (table) => [
     p
@@ -506,6 +507,10 @@ export const aiMemories = p.pgTable(
       .index("ai_memories_workspace_status_idx")
       .on(table.workspaceId, table.status)
       .where(isNotNull(table.workspaceId)),
+    p
+      .index("ai_memories_source_message_idx")
+      .on(table.sourceMessageId)
+      .where(isNotNull(table.sourceMessageId)),
     p
       .foreignKey({
         columns: [table.workspaceId, table.organizationId],

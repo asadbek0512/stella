@@ -63,6 +63,8 @@ const encryptContentMock = mock(async () => ({
 const requestAutomaticDocumentOcrMock = mock(async () => undefined);
 const indexEntityMock = mock(async () => undefined);
 
+const realS3 = await import("@/api/lib/s3");
+
 void mock.module("@/api/db/root", () => ({
   rootDb: {
     execute: executeMock,
@@ -77,6 +79,7 @@ void mock.module("@/api/lib/document-processing-automatic-request", () => ({
   requestAutomaticDocumentOcr: requestAutomaticDocumentOcrMock,
 }));
 void mock.module("@/api/lib/s3", () => ({
+  ...realS3,
   deleteS3ObjectWithSignal: s3DeleteMock,
   getS3: getS3Mock,
   putS3ObjectWithSignal: s3WriteMock,

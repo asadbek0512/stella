@@ -711,6 +711,7 @@ const handleRemoveMember = async ({
       safeDb: context.safeDb,
       workspaceId,
       userId: brandPersistedUserId(userId),
+      actorUserId: context.userId,
       recordAuditEvent: bindWorkspaceRecorder(context, workspaceId),
     }),
   );

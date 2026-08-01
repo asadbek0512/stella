@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   createFileRoute,
   getRouteApi,
@@ -41,6 +45,10 @@ import { detached } from "@/lib/detached";
 import { unwrapEden } from "@/lib/errors/api";
 import { userErrorFromThrown } from "@/lib/errors/user-safe";
 import { pageTitle } from "@/lib/page-title";
+import {
+  ensureRouteInfiniteQueryData,
+  ensureRouteQueryData,
+} from "@/lib/react-query";
 import { workspacesOptions } from "@/lib/workspaces/queries";
 import { entitiesKeys } from "@/lib/workspaces/queries/entities";
 import type {
@@ -52,6 +60,18 @@ import { myWorkOptions } from "@/routes/_protected.todos/-queries";
 const protectedRouteApi = getRouteApi("/_protected");
 
 export const Route = createFileRoute("/_protected/todos/")({
+  loader: async ({ context }) => {
+    await Promise.all([
+      ensureRouteInfiniteQueryData(
+        context.queryClient,
+        myWorkOptions("upcoming", localISODate()),
+      ),
+      ensureRouteQueryData(
+        context.queryClient,
+        workspacesOptions(context.user.activeOrganizationId),
+      ),
+    ]);
+  },
   head: () => ({
     meta: [{ title: pageTitle("navigation.myTodos") }],
   }),
@@ -127,6 +147,7 @@ function MyTodosPage() {
   const t = useTranslations();
   const navigate = useNavigate();
   const analytics = useAnalytics();
+  const queryClient = useQueryClient();
   const activeOrganizationId = protectedRouteApi.useRouteContext({
     select: (ctx) => ctx.user.activeOrganizationId,
   });
@@ -144,7 +165,7 @@ function MyTodosPage() {
     workspacesOptions(activeOrganizationId),
   );
 
-  const tasks = data?.pages.flatMap((page) => page.items) ?? [];
+  const tasks = data ? data.pages.flatMap((page) => page.items) : [];
   const groups = groupByWorkspace(tasks);
 
   useExternalSyncEffect(() => {
@@ -162,6 +183,7 @@ function MyTodosPage() {
     });
 
     const entityId = unwrapEden(response).entityId;
+    await queryClient.invalidateQueries({ queryKey: ["my-work"] });
 
     await navigate({
       to: "/workspaces/$workspaceId",
@@ -319,7 +341,15 @@ const TaskRow = ({ task }: { task: MyWorkItem }) => {
     : null;
 
   const displayedDate = task.hardDeadlineDate ?? task.workingTargetDate;
-  const isAtRisk = task.attention !== "none";
+  const isDue =
+    task.attention === "hard_deadline_due" ||
+    task.attention === "working_target_due";
+  let attentionColor = "text-success";
+  if (task.attention === "acknowledgement_required") {
+    attentionColor = "text-warning";
+  } else if (isDue) {
+    attentionColor = "text-destructive";
+  }
   const AttentionIcon = (() => {
     if (task.attention === "acknowledgement_required") {
       return InboxIcon;
@@ -351,19 +381,14 @@ const TaskRow = ({ task }: { task: MyWorkItem }) => {
         <PriorityIcon className={cn("size-3.5 shrink-0", priorityColor)} />
       )}
       {AttentionIcon && (
-        <AttentionIcon
-          className={cn(
-            "size-3.5 shrink-0",
-            isAtRisk ? "text-destructive" : "text-success",
-          )}
-        />
+        <AttentionIcon className={cn("size-3.5 shrink-0", attentionColor)} />
       )}
       {displayedDate && (
         <span
           className={cn(
             "flex shrink-0 items-center gap-1",
             "text-muted-foreground text-xs",
-            isAtRisk && "text-destructive",
+            isDue && "text-destructive",
           )}
         >
           <CalendarIcon className="size-3" />

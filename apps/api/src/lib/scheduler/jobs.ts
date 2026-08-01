@@ -12,6 +12,7 @@ import { EXPIRE_DESKTOP_EDIT_SESSIONS_TASK } from "@/api/lib/scheduler/tasks/des
 import { INFO_SOUD_SYNC_TRACKED_CASES_TASK } from "@/api/lib/scheduler/tasks/infosoud";
 import { REPAIR_CHAT_SEARCH_INDEX_TASK } from "@/api/lib/scheduler/tasks/search-chat-index";
 import { REPAIR_SEARCH_SEMANTIC_TIMESTAMPS_TASK } from "@/api/lib/scheduler/tasks/search-semantic-timestamps";
+import { BACKFILL_WORK_OBLIGATIONS_TASK } from "@/api/lib/scheduler/tasks/work-obligation-backfill";
 
 type SchedulerJobDefinition = {
   id: string;
@@ -143,6 +144,16 @@ export const ensureDefaultSchedulerJobs = async (): Promise<void> => {
       everyMs: 60 * 1000,
     },
     task: BACKFILL_CASE_LAW_REDACTION_TOMBSTONES_TASK,
+  });
+
+  await ensureOneShotSchedulerJob({
+    description: "Backfill governed work rows for legacy tasks",
+    id: "workObligations.backfillLegacyTasks.v1",
+    schedule: {
+      type: "interval",
+      everyMs: 60 * 1000,
+    },
+    task: BACKFILL_WORK_OBLIGATIONS_TASK,
   });
 
   await ensureSchedulerJob({

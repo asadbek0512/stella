@@ -300,7 +300,6 @@
       "legalSentence": "Tiesību tēze",
       "nalusDisclaimer": "Source: NALUS, Constitutional Court of the Czech Republic. Free of charge. This electronic version is not authentic.",
       "popularName": "Populārais nosaukums",
-      "source": "Avots",
       "sourceFields": {
         "decisionCategory": "Nolēmuma kategorija",
         "publishedOnWeb": "Publicēts tīmeklī"
@@ -994,6 +993,7 @@
     "signOut": "Atslēgties",
     "somethingWentWrong": "Kaut kas nogāja greizi",
     "sort": "Kārtot",
+    "source": "Avots",
     "status": "Statuss",
     "stepProgress": "{current} no {total}",
     "summarizeChanges": "Apkopot izmaiņas",
@@ -2739,11 +2739,9 @@
       "reviewer": "Pārskatītājs"
     },
     "assignees": "Atbildīgie",
-    "cancelledFromStatusControl": "Atcelts uzdevuma statusa vadīklā",
     "clearDate": "Notīrīt datumu",
     "completeWork": "Pabeigt darbu",
-    "deadlineChangedFromTask": "Saistošais termiņš mainīts uzdevuma informācijā",
-    "delegationReason": "Pārdalīšanas iemesls",
+    "delegationReason": "Izmaiņu iemesls",
     "deletedAccount": "Dzēsts konts",
     "dueDate": "Izpildes termiņš",
     "hardDeadline": "Saistošais termiņš",

@@ -300,7 +300,6 @@
       "legalSentence": "Teza orzeczenia",
       "nalusDisclaimer": "Źródło: NALUS, Trybunał Konstytucyjny Republiki Czeskiej. Bezpłatnie. Niniejsza wersja elektroniczna nie jest autentyczna; autentyczne są wyłącznie oryginały z godłem państwowym i podpisem upoważnionej osoby.",
       "popularName": "Nazwa potoczna",
-      "source": "Źródło",
       "sourceFields": {
         "decisionCategory": "Kategoria orzeczenia",
         "publishedOnWeb": "Opublikowano w sieci"
@@ -994,6 +993,7 @@
     "signOut": "Wyloguj się",
     "somethingWentWrong": "Coś poszło nie tak",
     "sort": "Sortuj",
+    "source": "Źródło",
     "status": "Status",
     "stepProgress": "{current} z {total}",
     "summarizeChanges": "Podsumuj zmiany",
@@ -2739,11 +2739,9 @@
       "reviewer": "Recenzent"
     },
     "assignees": "Przypisani",
-    "cancelledFromStatusControl": "Anulowano za pomocą ustawienia stanu zadania",
     "clearDate": "Wyczyść datę",
     "completeWork": "Ukończ pracę",
-    "deadlineChangedFromTask": "Nieprzekraczalny termin zmieniony w szczegółach zadania",
-    "delegationReason": "Powód ponownego przypisania",
+    "delegationReason": "Powód zmiany",
     "deletedAccount": "Usunięte konto",
     "dueDate": "Termin",
     "hardDeadline": "Nieprzekraczalny termin",

@@ -300,7 +300,6 @@
       "legalSentence": "Õiguslause",
       "nalusDisclaimer": "Source: NALUS, Constitutional Court of the Czech Republic. Free of charge. This electronic version is not authentic.",
       "popularName": "Rahvanimi",
-      "source": "Allikas",
       "sourceFields": {
         "decisionCategory": "Lahendi kategooria",
         "publishedOnWeb": "Veebis avaldatud"
@@ -994,6 +993,7 @@
     "signOut": "Logi välja",
     "somethingWentWrong": "Midagi läks valesti",
     "sort": "Sorteeri",
+    "source": "Allikas",
     "status": "Olek",
     "stepProgress": "{current} / {total}",
     "summarizeChanges": "Võta muudatused kokku",
@@ -2739,11 +2739,9 @@
       "reviewer": "Ülevaataja"
     },
     "assignees": "Määratud",
-    "cancelledFromStatusControl": "Tühistatud ülesande oleku valikust",
     "clearDate": "Tühjenda kuupäev",
     "completeWork": "Lõpeta töö",
-    "deadlineChangedFromTask": "Siduvat tähtaega muudeti ülesande üksikasjades",
-    "delegationReason": "Ümbermääramise põhjus",
+    "delegationReason": "Muudatuse põhjus",
     "deletedAccount": "Kustutatud konto",
     "dueDate": "Tähtaeg",
     "hardDeadline": "Siduv tähtaeg",

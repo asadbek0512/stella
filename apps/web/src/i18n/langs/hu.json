@@ -300,7 +300,6 @@
       "legalSentence": "Elvi bírósági határozat",
       "nalusDisclaimer": "Source: NALUS, Constitutional Court of the Czech Republic. Free of charge. This electronic version is not authentic.",
       "popularName": "Népszerű név",
-      "source": "Forrás",
       "sourceFields": {
         "decisionCategory": "Döntés kategóriája",
         "publishedOnWeb": "Weben közzétéve"
@@ -994,6 +993,7 @@
     "signOut": "Kijelentkezés",
     "somethingWentWrong": "Hiba történt",
     "sort": "Rendezés",
+    "source": "Forrás",
     "status": "Státusz",
     "stepProgress": "{current} / {total}",
     "summarizeChanges": "Változtatások összefoglalása",
@@ -2739,11 +2739,9 @@
       "reviewer": "Ellenőr"
     },
     "assignees": "Felelősök",
-    "cancelledFromStatusControl": "Törölve a feladat állapotvezérlőjéből",
     "clearDate": "Dátum törlése",
     "completeWork": "Munka befejezése",
-    "deadlineChangedFromTask": "Kötelező határidő módosítva a feladat részleteiben",
-    "delegationReason": "Újrakiosztás oka",
+    "delegationReason": "A módosítás oka",
     "deletedAccount": "Törölt fiók",
     "dueDate": "Határidő",
     "hardDeadline": "Kötelező határidő",

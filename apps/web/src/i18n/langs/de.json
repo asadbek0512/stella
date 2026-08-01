@@ -300,7 +300,6 @@
       "legalSentence": "Leitsatz",
       "nalusDisclaimer": "Source: NALUS, Constitutional Court of the Czech Republic. Free of charge. This electronic version is not authentic.",
       "popularName": "Populärer Name",
-      "source": "Quelle",
       "sourceFields": {
         "decisionCategory": "Entscheidungskategorie",
         "publishedOnWeb": "Im Web veröffentlicht"
@@ -994,6 +993,7 @@
     "signOut": "Abmelden",
     "somethingWentWrong": "Etwas ist schiefgelaufen",
     "sort": "Sortieren",
+    "source": "Quelle",
     "status": "Status",
     "stepProgress": "{current} von {total}",
     "summarizeChanges": "Änderungen zusammenfassen",
@@ -2739,11 +2739,9 @@
       "reviewer": "Prüfer"
     },
     "assignees": "Zugewiesene",
-    "cancelledFromStatusControl": "Über die Aufgabenstatussteuerung abgebrochen",
     "clearDate": "Datum löschen",
     "completeWork": "Arbeit abschließen",
-    "deadlineChangedFromTask": "Verbindliche Frist in den Aufgabendetails geändert",
-    "delegationReason": "Grund für die Neuzuweisung",
+    "delegationReason": "Grund für die Änderung",
     "deletedAccount": "Gelöschtes Konto",
     "dueDate": "Fälligkeitsdatum",
     "hardDeadline": "Verbindliche Frist",

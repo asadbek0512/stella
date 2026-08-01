@@ -42,7 +42,6 @@ import type {
   ChatSafePrompt,
   ChatUntrustedPromptSuffix,
 } from "@/api/handlers/chat/chat-prompt";
-import { resolveChatSandboxPlan } from "@/api/handlers/chat/chat-sandbox-plan";
 import {
   CHAT_RUN_MODE,
   type ChatRunMode,
@@ -65,7 +64,6 @@ import {
   prepareTextForThirdParty,
   prepareToolsForThirdParty,
 } from "@/api/handlers/chat/third-party-boundary";
-import type { AuthorizedToolWorkspaceIds } from "@/api/handlers/chat/tools/authorized-workspace-ids";
 import type { StellaMcpToolSource } from "@/api/handlers/chat/tools/external-mcp-tools";
 import type {
   ChatAnonRestoration,
@@ -134,7 +132,6 @@ type StreamChatFinishEvent = {
 };
 
 type StreamChatProps = {
-  agentWorkspaceIds: AuthorizedToolWorkspaceIds;
   abortSignal: AbortSignal;
   /**
    * Explicit chat model override for this turn: the dev-only
@@ -158,6 +155,7 @@ type StreamChatProps = {
    * chat to be rerouted just because the sandbox engine is enabled.
    */
   runMode: ChatRunMode | undefined;
+  sandboxRun: StellaSandboxRunInput | undefined;
   resolveAssistantTextRefs?: ((text: string) => string) | undefined;
   resolveAssistantValueRefs?: AssistantValueRefResolver | undefined;
   safeDb: SafeDb;
@@ -193,7 +191,6 @@ export const pruneOrphanedToolParts = (
   });
 
 export const streamChat = async ({
-  agentWorkspaceIds,
   abortSignal,
   devModelId,
   latestMessageId,
@@ -204,6 +201,7 @@ export const streamChat = async ({
   promptCacheKey,
   promptCachingEnabled,
   runMode,
+  sandboxRun,
   resolveAssistantTextRefs,
   resolveAssistantValueRefs,
   safeDb,
@@ -320,7 +318,6 @@ export const streamChat = async ({
   });
 
   const stream = runChatAttempts({
-    agentWorkspaceIds,
     abortController,
     abortSignal,
     baseSystem: system,
@@ -335,6 +332,7 @@ export const streamChat = async ({
     promptCacheKey,
     promptCachingEnabled,
     runMode,
+    sandboxRun,
     safeDb,
     thirdPartyBoundary,
     threadId,
@@ -608,7 +606,6 @@ const createChatAttemptAnalytics = ({
 type ChatAttemptRole = Extract<ModelRole, "chat" | "reasoning">;
 
 type RunChatAttemptsProps = {
-  agentWorkspaceIds: AuthorizedToolWorkspaceIds;
   abortController: AbortController;
   abortSignal: AbortSignal;
   baseSystem: string;
@@ -623,6 +620,7 @@ type RunChatAttemptsProps = {
   promptCacheKey: string;
   promptCachingEnabled: boolean;
   runMode: ChatRunMode | undefined;
+  sandboxRun: StellaSandboxRunInput | undefined;
   safeDb: SafeDb;
   thirdPartyBoundary: ChatThirdPartyBoundary;
   threadId: SafeId<"chatThread">;
@@ -631,7 +629,6 @@ type RunChatAttemptsProps = {
 };
 
 const runChatAttempts = async function* ({
-  agentWorkspaceIds,
   abortController,
   abortSignal,
   baseSystem,
@@ -646,6 +643,7 @@ const runChatAttempts = async function* ({
   promptCacheKey,
   promptCachingEnabled,
   runMode,
+  sandboxRun,
   safeDb,
   thirdPartyBoundary,
   threadId,
@@ -653,18 +651,9 @@ const runChatAttempts = async function* ({
   workspaceId,
 }: RunChatAttemptsProps): AsyncIterable<StreamChunk> {
   const primaryState = createChatAttemptState();
-  // Only an explicit agent-run request resolves a sandbox plan. A normal chat
-  // (runMode undefined) is never rerouted, even when the sandbox engine is
-  // enabled — so BYOK/model-selected turns keep the user's chosen adapter.
-  const sandboxRun =
-    runMode === CHAT_RUN_MODE.agent
-      ? await resolveChatSandboxPlan({
-          userId,
-          organizationId,
-          runId: Bun.randomUUIDv7(),
-          workspaceIds: agentWorkspaceIds,
-        })
-      : undefined;
+  // The caller resolves an explicit agent sandbox before persisting the
+  // incoming message. A normal chat never carries a plan, even when the engine
+  // is enabled, so BYOK/model-selected turns keep the chosen adapter.
   yield* runChatAttempt({
     abortController,
     abortSignal,
@@ -760,7 +749,7 @@ type RunChatAttemptProps = {
   role: ChatAttemptRole;
   safeDb: SafeDb;
   /**
-   * When set, this attempt runs inside an agent sandbox (plan 050): the
+   * When set, this attempt runs inside an agent sandbox: the
    * harness adapter replaces the model adapter and the sandbox middleware is
    * added. When absent (the default for every normal chat), the attempt is
    * unchanged. Explicit agent runs never fall back to a plain server-side
@@ -825,7 +814,7 @@ const runChatAttempt = async function* ({
   });
 
   if (sandboxRun) {
-    // Agent-sandbox attempt (plan 050): the harness adapter drives the run and
+    // The harness adapter drives the sandbox run and
     // reaches stella tools only through the bridged MCP server in the sandbox
     // workspace, so `tools`/`mcp` are intentionally not passed here — the
     // bridge is the sole tool surface. The analytics + runtime middleware are
@@ -837,8 +826,7 @@ const runChatAttempt = async function* ({
     // (`sandbox.instructions`), not the chat `system` message. The base chat
     // persona is written for the server-side chat model and its tool surface,
     // so injecting it verbatim into a coding-agent harness would be wrong.
-    // `baseSystem` stays wired below for loop-recovery parity; enriching the
-    // harness instructions with curated workspace context is a follow-up.
+    // `baseSystem` stays wired below for loop-recovery parity.
     const { adapter, middleware: sandboxMiddleware } =
       resolveStellaSandboxRun(sandboxRun);
     yield* chat({

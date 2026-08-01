@@ -2781,9 +2781,6 @@
     "sourceTypeValues": {
       "api": "API",
       "calendar": "Kalender",
-      "document": "Dokument",
-      "email": "E-post",
-      "import": "Import",
       "manual": "Käsitsi"
     },
     "status": "Staatus",

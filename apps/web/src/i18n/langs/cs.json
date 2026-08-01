@@ -2781,9 +2781,6 @@
     "sourceTypeValues": {
       "api": "API",
       "calendar": "Kalendář",
-      "document": "Dokument",
-      "email": "E-mail",
-      "import": "Import",
       "manual": "Ručně"
     },
     "status": "Stav",

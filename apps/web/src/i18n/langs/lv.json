@@ -2781,9 +2781,6 @@
     "sourceTypeValues": {
       "api": "API",
       "calendar": "Kalendārs",
-      "document": "Dokuments",
-      "email": "E-pasts",
-      "import": "Imports",
       "manual": "Manuāli"
     },
     "status": "Statuss",

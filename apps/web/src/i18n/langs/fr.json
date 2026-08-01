@@ -2781,9 +2781,6 @@
     "sourceTypeValues": {
       "api": "API",
       "calendar": "Calendrier",
-      "document": "Document",
-      "email": "E-mail",
-      "import": "Import",
       "manual": "Manuel"
     },
     "status": "Statut",

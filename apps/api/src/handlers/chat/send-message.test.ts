@@ -419,6 +419,7 @@ describe("send message disconnect handling", () => {
             chatThreads: {
               findFirst: async () => ({
                 chatModel: null,
+                chatReasoningEffort: null,
                 contextMatterIds: [],
                 dataWorkspaceIds: [],
                 id: threadId,
@@ -481,6 +482,7 @@ describe("send message disconnect handling", () => {
             chatThreads: {
               findFirst: async () => ({
                 chatModel: null,
+                chatReasoningEffort: null,
                 contextMatterIds: [],
                 dataWorkspaceIds: [],
                 id: threadId,
@@ -613,6 +615,7 @@ describe("send message disconnect handling", () => {
             chatThreads: {
               findFirst: async () => ({
                 chatModel: null,
+                chatReasoningEffort: null,
                 contextMatterIds: [],
                 dataWorkspaceIds: [],
                 id: threadId,

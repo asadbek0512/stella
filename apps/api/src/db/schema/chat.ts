@@ -1,3 +1,5 @@
+import { REASONING_EFFORTS } from "@stll/ai-catalog";
+
 import {
   chatMessageSearchDocumentPolicies,
   chatMessagePolicies,
@@ -107,6 +109,14 @@ export const chatThreads = p.pgTable(
      * failing the send.
      */
     chatModel: p.text("chat_model"),
+    /**
+     * Explicit effort for a manual `chatModel` selection. Null keeps Stella's
+     * adapter default and is always required while `chatModel` is null (Auto).
+     * The database migration adds the matching value/pair CHECK.
+     */
+    chatReasoningEffort: p.text("chat_reasoning_effort", {
+      enum: REASONING_EFFORTS,
+    }),
     /**
      * Cached "where you left off" recap, shown as subtle grey text
      * below the last message when the user reopens this thread after

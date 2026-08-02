@@ -129,7 +129,7 @@ import { AUDIT_ACTION, AUDIT_RESOURCE_TYPE } from "@/api/lib/audit-log";
 import type { AuditRecorder } from "@/api/lib/audit-log";
 import type { AccessibleWorkspace } from "@/api/lib/auth";
 import type { SafeId } from "@/api/lib/branded-types";
-import { resolveEffectiveChatModelId } from "@/api/lib/chat-model-selection";
+import { resolveEffectiveChatModelSelection } from "@/api/lib/chat-model-selection";
 import { createChatRefRegistry } from "@/api/lib/chat/ref-registry";
 import { detached } from "@/api/lib/detached";
 import { HandlerError } from "@/api/lib/errors/tagged-errors";
@@ -563,9 +563,13 @@ const sendMessage = createSafeRootHandler(
       // at write time in update-thread-model.ts) so a provider key removal or
       // a catalog bump that drops the model falls back to the org default
       // silently instead of failing the send.
-      const chatModelOverride = resolveEffectiveChatModelId({
+      const {
+        modelId: chatModelOverride,
+        reasoningEffort: chatReasoningEffort,
+      } = resolveEffectiveChatModelSelection({
         devModelId: body.devModelId,
         threadChatModel: thread.data.chatModel,
+        threadReasoningEffort: thread.data.chatReasoningEffort,
         orgAIConfig,
       });
 
@@ -1256,6 +1260,7 @@ const sendMessage = createSafeRootHandler(
                 orgAIConfig,
                 organizationId: session.activeOrganizationId,
                 devModelId: chatModelOverride,
+                reasoningEffort: chatReasoningEffort,
                 promptCacheKey: chatContext.promptCacheKey,
                 promptCachingEnabled,
                 resolveAssistantTextRefs: refRegistry.resolveAssistantTextRefs,

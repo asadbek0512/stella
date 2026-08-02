@@ -9,7 +9,7 @@ import type {
 import type { OpenAITextProviderOptions } from "@tanstack/ai-openai";
 import * as v from "valibot";
 
-import type { ModelRole } from "@stll/ai-catalog";
+import type { ModelRole, ReasoningEffort } from "@stll/ai-catalog";
 
 import type {
   AIRequestServiceTier,
@@ -54,6 +54,7 @@ type GenerateTanStackBaseOptions = {
   modelId?: string | undefined;
   organizationId: SafeId<"organization"> | null;
   orgAIConfig: OrgAIConfig | null | undefined;
+  reasoningEffort?: ReasoningEffort | undefined;
   role: ModelRole;
   serviceTier: AIRequestServiceTier;
   system?: string | undefined;
@@ -92,7 +93,7 @@ export type TanStackStructuredOutputEvent<TOutput> =
 
 type ResolveTextModelOptions = Pick<
   GenerateTanStackBaseOptions,
-  "modelId" | "organizationId" | "orgAIConfig" | "role"
+  "modelId" | "organizationId" | "orgAIConfig" | "reasoningEffort" | "role"
 >;
 
 export const generateTanStackTextForRole = async (
@@ -555,12 +556,14 @@ export const resolveTanStackTextModel = ({
   modelId,
   organizationId,
   orgAIConfig,
+  reasoningEffort,
   role,
 }: ResolveTextModelOptions): ResolvedTanStackTextModel =>
   modelId
     ? getTanStackTextModelById(modelId, orgAIConfig, {
         role,
         organizationId,
+        reasoningEffort,
       })
     : getTanStackTextModelForRole(role, orgAIConfig, { organizationId });
 

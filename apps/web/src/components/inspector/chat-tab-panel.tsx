@@ -84,7 +84,6 @@ import { useIsChatDraftEmpty } from "@/lib/chat-draft-store";
 import { type ChatThreadRef, createChatThreadId } from "@/lib/chat-thread-ref";
 import { isPlaceholderThreadTitle } from "@/lib/chat-thread-title";
 import { detached } from "@/lib/detached";
-import { useModelSelectorStore } from "@/lib/model-selector-store";
 import type { ChatPrompt } from "@/lib/prompts/types";
 import { useSavedPrompts } from "@/lib/prompts/use-saved-prompts";
 import { matchReservedChatCommand } from "@/lib/reserved-chat-commands";
@@ -499,12 +498,6 @@ export const ChatTabPanel = ({
                 editorController.setContent("");
                 return;
               }
-              if (reservedCommand?.id === "model") {
-                editorController.setContent("");
-                useModelSelectorStore.getState().open();
-                return;
-              }
-
               detached(handlePromptSubmit({ prompt, files }), "ChatTabPanel");
             }}
             pendingCount={0}

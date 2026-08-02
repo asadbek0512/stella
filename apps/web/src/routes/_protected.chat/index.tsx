@@ -67,7 +67,6 @@ import { useChatWebSearchPreferenceStore } from "@/lib/chat-web-search-store";
 import { ChromeHeaderActions } from "@/lib/chrome-header-actions";
 import { detached } from "@/lib/detached";
 import { unwrapEden } from "@/lib/errors/api";
-import { useModelSelectorStore } from "@/lib/model-selector-store";
 import { usePinnedStore } from "@/lib/pinned-store";
 import type { ChatPrompt } from "@/lib/prompts/types";
 import { useSavedPrompts } from "@/lib/prompts/use-saved-prompts";
@@ -164,6 +163,7 @@ function ChatIndex() {
         webSearchAvailable: data.webSearchAvailable,
         webSearchEnabled: data.webSearchEnabled,
         model: data.model,
+        reasoningEffort: data.reasoningEffort,
         // The draft's cache-stable context floor (system prompt + tools), so
         // the hero meter shows the honest baseline instead of 0% before send.
         context: data.context,
@@ -177,9 +177,10 @@ function ChatIndex() {
   // never race a just-changed model onto the thread's previous one. Same
   // hook `ChatThreadPage` uses; keeps both surfaces' sequencing identical.
   const modelSelection = useChatModelSelection({
-    onPersisted: (model) => {
+    onPersisted: ({ model, reasoningEffort }) => {
       applyChatModelChange({
         model,
+        reasoningEffort,
         queryClient,
         queryKey: draftMetaOptions.queryKey,
         threadId: toSafeId<"chatThread">(draftThreadId),
@@ -365,12 +366,6 @@ function ChatIndex() {
       rotateDraftThread((value) => value + 1);
       return;
     }
-    if (reservedCommand?.id === "model") {
-      controller.setContent("");
-      useModelSelectorStore.getState().open();
-      return;
-    }
-
     if (!(await ensureAIAvailable())) {
       return;
     }
@@ -483,6 +478,7 @@ function ChatIndex() {
                 activeOrganizationId,
                 threadRef,
                 selectedModel: chatDraftMeta?.model ?? null,
+                selectedReasoningEffort: chatDraftMeta?.reasoningEffort ?? null,
                 selectModel: modelSelection.selectModel,
               }}
               skillsOrganizationId={activeOrganizationId}
@@ -501,6 +497,8 @@ function ChatIndex() {
                     activeOrganizationId,
                     threadRef,
                     selectedModel: chatDraftMeta?.model ?? null,
+                    selectedReasoningEffort:
+                      chatDraftMeta?.reasoningEffort ?? null,
                     selectModel: modelSelection.selectModel,
                   }}
                   leadingContext={

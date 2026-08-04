@@ -1677,7 +1677,7 @@
       "progress": "{completed} of {total} complete"
     },
     "community": {
-      "body": "Stella has a public community chat server. Maintainers and other users answer questions there, share how they work, and pick up bug reports. It is a community forum rather than a support desk: the answer comes from whoever is around.",
+      "body": "Get help from other users and the maintainers in our community chat.",
       "linkLabel": "Open the community forum"
     },
     "help": {

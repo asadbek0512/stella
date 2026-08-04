@@ -1677,7 +1677,7 @@
       "progress": "{completed} z {total} dokončených"
     },
     "community": {
-      "body": "Stella má verejný komunitný chat. Odpovedajú tam vývojári aj ostatní používatelia, delia sa o svoje postupy a preberajú hlásenia chýb. Je to komunitné fórum, nie zákaznícka podpora: odpovie ten, kto je práve online.",
+      "body": "Získajte pomoc od ostatných používateľov a správcov v našom komunitnom chate.",
       "linkLabel": "Otvoriť komunitné fórum"
     },
     "help": {

@@ -1677,7 +1677,7 @@
       "progress": "Pabeigti {completed} no {total}"
     },
     "community": {
-      "body": "Stellai ir publisks kopienas tērzēšanas serveris. Tur atbild uzturētāji un citi lietotāji, dalās pieredzē un pieņem kļūdu ziņojumus. Tas ir kopienas forums, nevis atbalsta dienests: atbild tas, kurš tobrīd ir tiešsaistē.",
+      "body": "Saņemiet palīdzību no citiem lietotājiem un uzturētājiem mūsu kopienas tērzēšanā.",
       "linkLabel": "Atvērt kopienas forumu"
     },
     "help": {

@@ -1677,7 +1677,7 @@
       "progress": "{completed} de {total} concluídos"
     },
     "community": {
-      "body": "A Stella tem um chat público da comunidade. Lá os mantenedores e outros usuários respondem dúvidas, contam como trabalham e recebem relatos de erros. É um fórum da comunidade, não um canal de suporte: responde quem estiver por perto.",
+      "body": "Obtenha ajuda de outros usuários e dos mantenedores no nosso chat da comunidade.",
       "linkLabel": "Abrir o fórum da comunidade"
     },
     "help": {

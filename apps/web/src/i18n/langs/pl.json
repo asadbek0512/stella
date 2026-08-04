@@ -1677,7 +1677,7 @@
       "progress": "Ukończono {completed} z {total}"
     },
     "community": {
-      "body": "Stella ma publiczny czat społeczności. Odpowiadają tam opiekunowie projektu i inni użytkownicy, dzielą się swoimi sposobami pracy i przyjmują zgłoszenia błędów. To forum społeczności, a nie dział wsparcia: odpowiada ten, kto akurat jest online.",
+      "body": "Uzyskaj pomoc od innych użytkowników i opiekunów projektu na naszym czacie społeczności.",
       "linkLabel": "Otwórz forum społeczności"
     },
     "help": {

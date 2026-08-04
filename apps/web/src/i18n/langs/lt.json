@@ -1677,7 +1677,7 @@
       "progress": "Atlikta {completed} iš {total}"
     },
     "community": {
-      "body": "„Stella“ turi viešą bendruomenės pokalbių serverį. Ten atsako prižiūrėtojai ir kiti naudotojai, dalijasi savo darbo būdais ir priima klaidų pranešimus. Tai bendruomenės forumas, o ne pagalbos tarnyba: atsako tas, kas tuo metu yra prisijungęs.",
+      "body": "Gaukite pagalbos iš kitų naudotojų ir prižiūrėtojų mūsų bendruomenės pokalbiuose.",
       "linkLabel": "Atverti bendruomenės forumą"
     },
     "help": {

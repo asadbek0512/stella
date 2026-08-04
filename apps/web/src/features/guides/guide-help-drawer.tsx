@@ -103,11 +103,12 @@ const GuideCommunityPanel = () => {
   const t = useTranslations();
 
   return (
-    <div className="flex flex-col items-start gap-3">
+    <div className="flex flex-col gap-3">
       <p className="text-muted-foreground text-sm">
         {t("guides.community.body")}
       </p>
       <Button
+        className="w-full"
         render={
           <a
             // The label duplicates the visible text: the anchor's children are
@@ -118,8 +119,6 @@ const GuideCommunityPanel = () => {
             target="_blank"
           />
         }
-        size="sm"
-        variant="secondary"
       >
         <DiscordLogoIcon />
         {t("guides.community.linkLabel")}

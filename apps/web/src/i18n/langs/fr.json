@@ -1677,7 +1677,7 @@
       "progress": "{completed} sur {total} terminés"
     },
     "community": {
-      "body": "Stella dispose d'un salon de discussion communautaire public. Les mainteneurs et d'autres utilisateurs y répondent aux questions, partagent leurs méthodes et recueillent les signalements de bugs. C'est un forum communautaire, pas un service d'assistance : la réponse vient de qui est disponible.",
+      "body": "Obtenez de l'aide auprès d'autres utilisateurs et des mainteneurs dans notre chat communautaire.",
       "linkLabel": "Ouvrir le forum communautaire"
     },
     "help": {

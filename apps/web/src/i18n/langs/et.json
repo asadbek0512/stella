@@ -1677,7 +1677,7 @@
       "progress": "{completed} / {total} tehtud"
     },
     "community": {
-      "body": "Stellal on avalik kogukonna vestlusserver. Seal vastavad hooldajad ja teised kasutajad, jagavad oma töövõtteid ning võtavad vastu veateateid. See on kogukonna foorum, mitte klienditugi: vastab see, kes parasjagu kohal on.",
+      "body": "Küsi abi teistelt kasutajatelt ja hooldajatelt meie kogukonna vestluses.",
       "linkLabel": "Ava kogukonna foorum"
     },
     "help": {

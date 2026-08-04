@@ -1677,7 +1677,7 @@
       "progress": "{completed} de {total} completado"
     },
     "community": {
-      "body": "Stella tiene un chat comunitario público. Allí responden los mantenedores y otros usuarios, comparten cómo trabajan y recogen los informes de errores. Es un foro de la comunidad, no un servicio de soporte: responde quien esté disponible.",
+      "body": "Obtén ayuda de otros usuarios y de los mantenedores en nuestro chat de la comunidad.",
       "linkLabel": "Abrir el foro de la comunidad"
     },
     "help": {

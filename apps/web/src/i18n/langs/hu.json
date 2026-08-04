@@ -1677,7 +1677,7 @@
       "progress": "{completed} / {total} kész"
     },
     "community": {
-      "body": "A Stellának nyilvános közösségi csevegőszervere van. Ott a karbantartók és a többi felhasználó válaszol a kérdésekre, megosztják a munkamódszereiket, és felveszik a hibajelentéseket. Ez közösségi fórum, nem ügyfélszolgálat: az válaszol, aki éppen elérhető.",
+      "body": "Kérjen segítséget más felhasználóktól és a karbantartóktól a közösségi csevegésünkben.",
       "linkLabel": "Közösségi fórum megnyitása"
     },
     "help": {

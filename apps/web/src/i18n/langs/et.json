@@ -1678,6 +1678,8 @@
     },
     "community": {
       "body": "Küsi abi teistelt kasutajatelt ja arendajatelt meie kogukonna vestluses.",
+      "directLinkLabel": "Võtke meiega ühendust",
+      "directPrompt": "Vajate garanteeritud vastamisaega?",
       "linkLabel": "Ava kogukonna foorum"
     },
     "help": {

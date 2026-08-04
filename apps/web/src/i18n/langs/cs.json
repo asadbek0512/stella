@@ -1678,6 +1678,8 @@
     },
     "community": {
       "body": "Získejte pomoc od ostatních uživatelů a vývojářů v našem komunitním chatu.",
+      "directLinkLabel": "Ozvěte se nám",
+      "directPrompt": "Potřebujete garantovanou dobu odezvy?",
       "linkLabel": "Otevřít komunitní fórum"
     },
     "help": {

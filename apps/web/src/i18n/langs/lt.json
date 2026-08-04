@@ -1691,6 +1691,7 @@
       },
       "title": "Pagalba ir vadovai"
     },
+    "leave": "Išeiti iš vadovo",
     "minutes": "{count} min.",
     "status": {
       "skipped": "Praleista"

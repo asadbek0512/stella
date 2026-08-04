@@ -1691,6 +1691,7 @@
       },
       "title": "Abi ja juhendid"
     },
+    "leave": "Välju juhendist",
     "minutes": "{count} min.",
     "status": {
       "skipped": "Vahele jäetud"

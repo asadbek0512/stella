@@ -1691,6 +1691,7 @@
       },
       "title": "Súgó és útmutatók"
     },
+    "leave": "Kilépés az útmutatóból",
     "minutes": "{count} perc",
     "status": {
       "skipped": "Kihagyva"

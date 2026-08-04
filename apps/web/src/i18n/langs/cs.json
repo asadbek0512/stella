@@ -1691,6 +1691,7 @@
       },
       "title": "Nápověda a průvodce"
     },
+    "leave": "Ukončit průvodce",
     "minutes": "{count} min.",
     "status": {
       "skipped": "Přeskočeno"

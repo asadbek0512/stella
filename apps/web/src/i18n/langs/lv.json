@@ -1691,6 +1691,7 @@
       },
       "title": "Palīdzība un ceļveži"
     },
+    "leave": "Iziet no ceļveža",
     "minutes": "{count} min.",
     "status": {
       "skipped": "Izlaists"

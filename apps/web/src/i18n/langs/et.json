@@ -823,7 +823,6 @@
     },
     "back": "Tagasi",
     "cancel": "Tühista",
-    "captions": "Subtiitrid",
     "caseLaw": "Kohtupraktika",
     "category": "Kategooria",
     "categoryName": "Kategooria nimi",
@@ -959,7 +958,6 @@
     "organization": "Organisatsioon",
     "organizationName": "Organisatsiooni nimi",
     "pin": "Kinnita",
-    "playVideo": "Esita video",
     "playbooks": "Playbookid",
     "preparing": "Ettevalmistamine…",
     "preview": "Eelvaade",
@@ -3330,13 +3328,11 @@
     "duplicatingWorkspace": "Toimiku dubleerimine",
     "emptyDocuments": {
       "description": "Laadige dokumendid üles, et võimaldada tabelite eraldamist, dokumentide korrastamist, brauseris redigeerimist ja otsingut selles toimikus.",
-      "title": "Laadige üles esimesed dokumendid",
-      "videoLabel": "Toimiku dokumentide ülevaade"
+      "title": "Laadige üles esimesed dokumendid"
     },
     "emptyMatters": {
       "description": "Looge toimik, et korraldada dokumendid, kontaktid, ülesanded ja tiimi tegevus ühes kohas.",
-      "title": "Looge esimene toimik",
-      "videoLabel": "Toimiku seadistamise ülevaade"
+      "title": "Looge esimene toimik"
     },
     "entitiesCount": "{count, plural, one {# element} other {# elementi}}",
     "exportToCsv": "Ekspordi CSV-sse",

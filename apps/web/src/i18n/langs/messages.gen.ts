@@ -826,7 +826,6 @@ type Messages = {
     };
     "back": "Back";
     "cancel": "Cancel";
-    "captions": "Captions";
     "caseLaw": "Case Law";
     "category": "Category";
     "categoryName": "Category name";
@@ -962,7 +961,6 @@ type Messages = {
     "organization": "Organization";
     "organizationName": "Organization name";
     "pin": "Pin";
-    "playVideo": "Play video";
     "playbooks": "Playbooks";
     "preparing": "Preparing…";
     "preview": "Preview";
@@ -3334,12 +3332,10 @@ type Messages = {
     "emptyDocuments": {
       "description": "Upload documents to enable table extraction, document organization, in-browser editing, and search across this matter.";
       "title": "Upload your first documents";
-      "videoLabel": "Matter documents overview";
     };
     "emptyMatters": {
       "description": "Create a matter to organize documents, contacts, tasks, and team activity in one place.";
       "title": "Create your first matter";
-      "videoLabel": "Matter setup overview";
     };
     "entitiesCount": "{count, plural, one {# item} other {# items}}";
     "exportToCsv": "Export to CSV";

@@ -51,7 +51,6 @@ import {
 import { cn } from "@stll/ui/lib/utils";
 
 import { EmptyScreen } from "@/components/empty-screen";
-import { EMPTY_SCREEN_MATTERS_VIDEO } from "@/components/empty-screen-media";
 import { isTerminalFlowRunStatus } from "@/components/flows/flow-meta";
 import { useInspectorTabsStore } from "@/components/inspector/inspector-tabs-store";
 import { PersonMentionLabel } from "@/components/person-mention-label";
@@ -984,10 +983,6 @@ export const OverviewView = ({ workspaceId }: OverviewViewProps) => {
           }}
           showHelpBar={false}
           title={tWorkspaces("emptyDocuments.title")}
-          video={{
-            ...EMPTY_SCREEN_MATTERS_VIDEO,
-            title: tWorkspaces("emptyMatters.videoLabel"),
-          }}
         />
       )}
 

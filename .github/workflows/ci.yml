@@ -326,6 +326,13 @@ jobs:
       - name: Setup Bun
         uses: stella/.github/actions/setup-bun-cached@859a61ee0a799ba1028281329555cadee15bfc4f
 
+      # Must follow Setup Bun so the shims land ahead of the real binary. This
+      # job installs the whole workspace from the lockfile, so a malicious
+      # package anywhere in the graph is caught here and blocks the PR.
+      - name: Install Safe Chain
+        if: needs.ci-plan.outputs.package_checks_required == 'true'
+        uses: ./.github/actions/safe-chain
+
       - name: Turbo remote cache
         if: needs.ci-plan.outputs.package_checks_required == 'true'
         uses: rharkor/caching-for-turbo@2238fae6eb9a9936f92356f54cb3660200d105e7 # v2.5.1

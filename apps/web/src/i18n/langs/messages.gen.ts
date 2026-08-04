@@ -1680,7 +1680,7 @@ type Messages = {
       "progress": "{completed} of {total} complete";
     };
     "community": {
-      "body": "Get help from other users and the maintainers in our community chat.";
+      "body": "Get help from other users and the developers in our community chat.";
       "linkLabel": "Open the community forum";
     };
     "help": {

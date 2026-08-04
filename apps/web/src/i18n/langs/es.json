@@ -1677,7 +1677,7 @@
       "progress": "{completed} de {total} completado"
     },
     "community": {
-      "body": "Obtén ayuda de otros usuarios y de los mantenedores en nuestro chat de la comunidad.",
+      "body": "Obtén ayuda de otros usuarios y de los desarrolladores en nuestro chat de la comunidad.",
       "linkLabel": "Abrir el foro de la comunidad"
     },
     "help": {
